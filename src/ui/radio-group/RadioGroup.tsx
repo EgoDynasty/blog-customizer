@@ -1,44 +1,43 @@
+import clsx from 'clsx';
 import { OptionType } from 'src/constants/articleProps';
-import { Text } from 'src/ui/text';
-import { Option } from './Option';
-
 import styles from './RadioGroup.module.scss';
 
-type RadioGroupProps = {
-	name: string;
+export type RadioGroupProps = {
+	name?: string;
+	title?: string;
 	options: OptionType[];
-	selected: OptionType;
+	value: OptionType;
 	onChange?: (value: OptionType) => void;
-	title: string;
 };
 
-export const RadioGroup = (props: RadioGroupProps) => {
-	const { name, options, selected, onChange, title } = props;
-
-	const handleChange = (option: OptionType) => onChange?.(option);
-
+export const RadioGroup: React.FC<RadioGroupProps> = ({
+	name,
+	title,
+	options,
+	value,
+	onChange,
+}) => {
 	return (
-		<div className={styles.container}>
-			{title && (
-				<>
-					<Text weight={800} size={12} uppercase>
-						{title}
-					</Text>
-				</>
-			)}
-			<div className={styles.group}>
-				{options.map((option) => (
-					<Option
-						key={option.value}
-						groupName={name}
+		<div className={styles.radioGroup}>
+			{title && <span className={styles.title}>{title}</span>}
+			{options.map((option) => (
+				<label key={option.value} className={styles.radioLabel}>
+					<input
+						type='radio'
+						name={name}
 						value={option.value}
-						title={option.title}
-						selected={selected}
-						onChange={() => handleChange(option)}
-						option={option}
+						checked={option.value === value.value}
+						onChange={() => onChange?.(option)}
+						className={styles.radioInput}
 					/>
-				))}
-			</div>
+					<span
+						className={clsx(styles.radioCustom, {
+							[styles.active]: option.value === value.value,
+						})}>
+						{option.title}
+					</span>
+				</label>
+			))}
 		</div>
 	);
 };

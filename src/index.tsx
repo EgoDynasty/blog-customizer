@@ -35,7 +35,7 @@ const App = () => {
 					'--bg-color': settings.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm onApply={handleApply} />
+			<ArticleParamsForm onApply={handleApply} title='Задайте параметры' />
 			<Article />
 		</main>
 	);

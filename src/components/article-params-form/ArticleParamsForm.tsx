@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import clsx from 'clsx';
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
 import { Select } from 'src/ui/select';
 import { Text } from 'src/ui/text';
+import { RadioGroup } from 'src/ui/radio-group';
 import {
 	fontFamilyOptions,
 	fontSizeOptions,
@@ -12,15 +13,20 @@ import {
 	contentWidthArr,
 	defaultArticleState,
 	ArticleStateType,
+	OptionType,
 } from 'src/constants/articleProps';
 
 import styles from './ArticleParamsForm.module.scss';
 
 type ArticleParamsFormProps = {
 	onApply: (settings: ArticleStateType) => void;
+	title: string;
 };
 
-export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
+export const ArticleParamsForm = ({
+	onApply,
+	title,
+}: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [formState, setFormState] = useState(defaultArticleState);
 	const sidebarRef = useRef<HTMLElement>(null);
@@ -44,20 +50,29 @@ export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
 		};
 	}, [isOpen]);
 
-	const handleChange = (key: keyof ArticleStateType, value: any) => {
-		setFormState((prev) => ({ ...prev, [key]: value }));
-	};
+	const handleChange = useCallback(
+		(key: keyof ArticleStateType, value: OptionType) => {
+			setFormState((prev) => ({ ...prev, [key]: value }));
+		},
+		[]
+	);
 
-	const handleApply = (e: React.FormEvent) => {
-		e.preventDefault();
-		onApply(formState);
-	};
+	const handleApply = useCallback(
+		(e: React.FormEvent) => {
+			e.preventDefault();
+			onApply(formState);
+		},
+		[formState, onApply]
+	);
 
-	const handleReset = (e: React.FormEvent) => {
-		e.preventDefault();
-		setFormState(defaultArticleState);
-		onApply(defaultArticleState);
-	};
+	const handleReset = useCallback(
+		(e: React.FormEvent) => {
+			e.preventDefault();
+			setFormState(defaultArticleState);
+			onApply(defaultArticleState);
+		},
+		[onApply]
+	);
 
 	return (
 		<>
@@ -69,6 +84,7 @@ export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
 					className={styles.form}
 					onSubmit={handleApply}
 					onReset={handleReset}>
+					<h2 className={styles.formTitle}>{title}</h2>
 					<Select
 						title='Шрифт'
 						options={fontFamilyOptions}
@@ -76,25 +92,14 @@ export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
 						onChange={(value) => handleChange('fontFamilyOption', value)}
 						onClose={() => setIsOpen(false)}
 					/>
-					<div className={styles.fontSizeContainer}>
-						<Text size={12} weight={800} uppercase>
-							Размер шрифта
-						</Text>
-						<div className={styles.fontSizeButtons}>
-							{fontSizeOptions.map((option) => (
-								<button
-									key={option.value}
-									type='button'
-									className={clsx(styles.fontSizeButton, {
-										[styles.active]:
-											option.value === formState.fontSizeOption.value,
-									})}
-									onClick={() => handleChange('fontSizeOption', option)}>
-									{option.title}
-								</button>
-							))}
-						</div>
-					</div>
+					<Text size={12} weight={800} uppercase>
+						Размер шрифта
+					</Text>
+					<RadioGroup
+						options={fontSizeOptions}
+						value={formState.fontSizeOption}
+						onChange={(value) => handleChange('fontSizeOption', value)}
+					/>
 					<Select
 						title='Цвет шрифта'
 						options={fontColors}
