@@ -87,47 +87,65 @@ export const ArticleParamsForm = ({
 					<Text as='h2' size={31} weight={800} uppercase>
 						{title}
 					</Text>
-					<Select
-						title='Шрифт'
-						options={fontFamilyOptions}
-						selected={formState.fontFamilyOption}
-						onChange={(value) => handleChange('fontFamilyOption', value)}
-						onClose={() => setIsOpen(false)}
-					/>
-					<Text size={12} weight={800} uppercase>
-						Размер шрифта
-					</Text>
-					<RadioGroup
-						name='fontSize'
-						title='Размер шрифта'
-						options={fontSizeOptions}
-						selected={formState.fontSizeOption}
-						onChange={(value) => handleChange('fontSizeOption', value)}
-					/>
-					<Select
-						title='Цвет шрифта'
-						options={fontColors}
-						selected={formState.fontColor}
-						onChange={(value) => handleChange('fontColor', value)}
-						onClose={() => setIsOpen(false)}
-					/>
-					<Select
-						title='Цвет фона'
-						options={backgroundColors}
-						selected={formState.backgroundColor}
-						onChange={(value) => handleChange('backgroundColor', value)}
-						onClose={() => setIsOpen(false)}
-					/>
-					<Select
-						title='Ширина контента'
-						options={contentWidthArr}
-						selected={formState.contentWidth}
-						onChange={(value) => handleChange('contentWidth', value)}
-						onClose={() => setIsOpen(false)}
-					/>
+					<div className={styles.section}>
+						<Text size={12} weight={800} uppercase>
+							Шрифт
+						</Text>
+						<Select
+							options={fontFamilyOptions}
+							selected={formState.fontFamilyOption}
+							onChange={(value) => handleChange('fontFamilyOption', value)}
+							onClose={() => setIsOpen(false)}
+						/>
+					</div>
+					<div className={styles.section}>
+						<Text size={12} weight={800} uppercase>
+							Размер шрифта
+						</Text>
+						<RadioGroup
+							name='fontSize'
+							title=''
+							options={fontSizeOptions}
+							selected={formState.fontSizeOption}
+							onChange={(value) => handleChange('fontSizeOption', value)}
+						/>
+					</div>
+					<div className={styles.section}>
+						<Text size={12} weight={800} uppercase>
+							Цвет шрифта
+						</Text>
+						<Select
+							options={fontColors}
+							selected={formState.fontColor}
+							onChange={(value) => handleChange('fontColor', value)}
+							onClose={() => setIsOpen(false)}
+						/>
+					</div>
+					<div className={styles.section}>
+						<Text size={12} weight={800} uppercase>
+							Цвет фона
+						</Text>
+						<Select
+							options={backgroundColors}
+							selected={formState.backgroundColor}
+							onChange={(value) => handleChange('backgroundColor', value)}
+							onClose={() => setIsOpen(false)}
+						/>
+					</div>
+					<div className={styles.section}>
+						<Text size={12} weight={800} uppercase>
+							Ширина контента
+						</Text>
+						<Select
+							options={contentWidthArr}
+							selected={formState.contentWidth}
+							onChange={(value) => handleChange('contentWidth', value)}
+							onClose={() => setIsOpen(false)}
+						/>
+					</div>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' htmlType='reset' type='clear' />
-						<Button title='Применить' htmlType='submit' type='apply' />
+						<Button title='СБРОСИТЬ' htmlType='reset' type='clear' />
+						<Button title='ПРИМЕНИТЬ' htmlType='submit' type='apply' />
 					</div>
 				</form>
 			</aside>
