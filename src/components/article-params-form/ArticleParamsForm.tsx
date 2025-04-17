@@ -84,7 +84,9 @@ export const ArticleParamsForm = ({
 					className={styles.form}
 					onSubmit={handleApply}
 					onReset={handleReset}>
-					<h2 className={styles.formTitle}>{title}</h2>
+					<Text as='h2' size={31} weight={800} uppercase>
+						{title}
+					</Text>
 					<Select
 						title='Шрифт'
 						options={fontFamilyOptions}
@@ -96,8 +98,10 @@ export const ArticleParamsForm = ({
 						Размер шрифта
 					</Text>
 					<RadioGroup
+						name='fontSize'
+						title='Размер шрифта'
 						options={fontSizeOptions}
-						value={formState.fontSizeOption}
+						selected={formState.fontSizeOption}
 						onChange={(value) => handleChange('fontSizeOption', value)}
 					/>
 					<Select

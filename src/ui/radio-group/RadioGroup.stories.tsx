@@ -17,16 +17,16 @@ const RadioGroupWithState = () => {
 		{ title: '3 опция', value: '3 опция', className: '' },
 		{ title: '4 опция', value: '4 опция', className: '' },
 	];
-	const [value, setValue] = useState<OptionType>(options[0]);
+	const [selected, setSelected] = useState<OptionType>(options[0]);
 
 	return (
 		<>
 			<RadioGroup
-				value={value}
 				name='radio'
-				onChange={setValue}
-				options={options}
 				title='Название радиогруппы'
+				options={options}
+				selected={selected}
+				onChange={setSelected}
 			/>
 		</>
 	);
